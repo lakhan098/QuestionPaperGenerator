@@ -1,4 +1,5 @@
 const questionStore = require("./questionStore");
+const questionWeight = require('../data/questionWeight');
 
 const generateQuestionPaper = (totalMarks, difficultyDistribution) => {
     const questionPaper = [];
@@ -14,22 +15,9 @@ const generateQuestionPaper = (totalMarks, difficultyDistribution) => {
   
 const getQuestionsByDifficulty = (difficulty, percentage, totalMarks) => {
     const questions = questionStore.filter((question) => question.difficulty === difficulty);
-    const totalQuestions = Math.ceil((percentage / 100) * (totalMarks / questionWeight(difficulty)));
+    const totalQuestions = Math.ceil((percentage / 100) * (totalMarks / questionWeight[difficulty]));
     return questions.slice(0, totalQuestions);
 };
-  
-const questionWeight = (difficulty) => {
-    switch (difficulty) {
-      case 'Easy':
-        return 1;
-      case 'Medium':
-        return 2;
-      case 'Hard':
-        return 3;
-      default:
-        throw new Error(`Invalid difficulty: ${difficulty}`);
-    }
-};
-  
+
 module.exports = generateQuestionPaper;
   
